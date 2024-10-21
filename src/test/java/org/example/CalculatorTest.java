@@ -33,5 +33,14 @@ class CalculatorTest {
         assertEquals(791.2, calc.netSalaryCalculation(1000, 100));
     }
 
+//    @Test
+//    public void toStringTest() {
+//        assertEquals(771.2, calc.netSalaryCalculation(1000, 0));
+//        assertEquals("""
+//            TULEMUS         EUR        %
+//            Brutopalk       1000.00    100""", calc.toString().stripTrailing());
+//    }
+
+
 }
 

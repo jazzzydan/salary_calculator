@@ -7,8 +7,7 @@ public class Calculator {
     static final double INCOME_TAX_RATE = 20.0;
 
     private double grossSalary;
-    private double netSalary;
-    private double taxFreeIncome = 0;
+    private double taxFreeIncome;
 
     double pensionAmount(double grossSalary) {
         return grossSalary * (PENSION_RATE / 100);
@@ -23,7 +22,20 @@ public class Calculator {
     }
 
     public double netSalaryCalculation(double grossSalary, double taxFreeIncome) {
-        double result = extractPensionAndUnemployment(grossSalary);
-        return result - ((result - taxFreeIncome) * (INCOME_TAX_RATE / 100));
+        this.grossSalary = grossSalary;
+        this.taxFreeIncome = taxFreeIncome;
+        double intermediateResult = extractPensionAndUnemployment(grossSalary);
+        return intermediateResult - ((intermediateResult - taxFreeIncome) * (INCOME_TAX_RATE / 100));
     }
+
+    @Override
+    public String toString() {
+        String header = String.format("%-15s %-10s %-5s", "TULEMUS", "EUR", "%");
+        StringBuilder outputTable = new StringBuilder();
+        outputTable.append(header).append("\n")
+                .append(String.format("%-15s %-10.2f %-5s", "Brutopalk", grossSalary, "100"))
+                .append("\n");
+        return outputTable.toString();
+    }
+
 }
