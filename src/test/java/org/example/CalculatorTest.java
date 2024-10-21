@@ -17,9 +17,10 @@ class CalculatorTest {
     public void unemploymentPaymentTest() {
         assertEquals(16, calc.unemploymentPaymentAmount(1000));
     }
+
     @Test
-    public void grossMinusPensionUnemploymentTest() {
-        assertEquals(964,calc.grossMinusPensionUnemployment(1000));
+    public void extractPensionAndUnemploymentTest() {
+        assertEquals(964, calc.extractPensionAndUnemployment(1000));
     }
 
     @Test
@@ -27,4 +28,10 @@ class CalculatorTest {
         assertEquals(771.2, calc.netSalaryCalculation(1000, 0));
     }
 
+    @Test
+    public void netSalaryCalculationWithTaxFreeIncomeTest() {
+        assertEquals(791.2, calc.netSalaryCalculation(1000, 100));
+    }
+
 }
+
