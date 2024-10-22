@@ -12,4 +12,9 @@ public class NetSalary {
     public void setNetSalary(BigDecimal netSalary) {
         this.netSalary = netSalary;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%-30s %-10s %s", "Netopalk:", netSalary, "100");
+    }
 }

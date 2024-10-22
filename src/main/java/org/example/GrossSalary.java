@@ -9,8 +9,15 @@ public class GrossSalary {
 
     private BigDecimal grossSalary;
 
-    public void setGrossSalary(double grossSalary) {
+    public GrossSalary() {
+    }
+
+    public GrossSalary(double grossSalary) {
         this.grossSalary = BigDecimal.valueOf(grossSalary);
+    }
+
+    public void setGrossSalary(double grossSalary) {
+        this.grossSalary = BigDecimal.valueOf(grossSalary).setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal netSalaryCalculation(double grossSalary) {
@@ -19,6 +26,7 @@ public class GrossSalary {
         double amountAfterDeductions = totalDeductions(grossSalary);
         double taxableIncome = amountAfterDeductions - grossSalaryObject.calculateTaxFreeIncome(grossSalary).doubleValue();
         BigDecimal incomeTax = BigDecimal.valueOf(taxableIncome * INCOME_TAX_RATE);
+
         return BigDecimal.valueOf(amountAfterDeductions).subtract(incomeTax).setScale(2, RoundingMode.HALF_UP);
     }
 
@@ -53,6 +61,5 @@ public class GrossSalary {
     public String toString() {
         return String.format("%-30s %-10s %s", "Brutopalk:", grossSalary, "100");
     }
-
 
 }

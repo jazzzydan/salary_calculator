@@ -11,16 +11,14 @@ public class InputHandler {
     public void processInput() {
         System.out.println("Please enter Gross Salary: ");
         String input = scanner.nextLine();
-        // Replaces commas with dots to allow for decimal numbers in case of mistyped input
         input = input.replace(",", ".");
-        double grossSalary = Double.parseDouble(input.isEmpty() ? "0" : input);
+        double grossSalaryValue = Double.parseDouble(input.isEmpty() ? "0" : input);
 
-        System.out.println("Please enter Tax Free Income: ");
-        input = scanner.nextLine();
-        input = input.replace(",", ".");
-        BigDecimal taxFreeIncome = new BigDecimal(input.isEmpty() ? "0" : input);
-
-//        calc.netSalaryCalculation(grossSalary);
-//        System.out.println(calc);
+        calc.calculateUsingGross(grossSalaryValue);
+        System.out.println(String.format("%-30s %-10s %s", "TULEMUS", "EUR", "%"));
+        System.out.println(calc.getGrossSalary());
+        System.out.println(calc.getNetSalary());
+        System.out.println(calc.getTotalSalary());
+        //todo: correct null return in grossSalary and netSalary toString
     }
 }
