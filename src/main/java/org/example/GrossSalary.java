@@ -5,26 +5,15 @@ import java.math.RoundingMode;
 
 import static org.example.TaxParameters.*;
 
-public class GrossSalary {
+public class GrossSalary extends Salary {
 
-    private BigDecimal grossSalary;
-
-    public GrossSalary() {
-    }
-
-    public GrossSalary(double grossSalary) {
-        this.grossSalary = BigDecimal.valueOf(grossSalary);
-    }
-
-    public void setGrossSalary(double grossSalary) {
-        this.grossSalary = BigDecimal.valueOf(grossSalary).setScale(2, RoundingMode.HALF_UP);
+    public void setSalary(double grossSalary) {
+        super.setSalary(BigDecimal.valueOf(grossSalary).setScale(2, RoundingMode.HALF_UP));
     }
 
     public BigDecimal netSalaryCalculation(double grossSalary) {
-        GrossSalary grossSalaryObject = new GrossSalary();
-
         double amountAfterDeductions = totalDeductions(grossSalary);
-        double taxableIncome = amountAfterDeductions - grossSalaryObject.calculateTaxFreeIncome(grossSalary).doubleValue();
+        double taxableIncome = amountAfterDeductions - calculateTaxFreeIncome(grossSalary).doubleValue();
         BigDecimal incomeTax = BigDecimal.valueOf(taxableIncome * INCOME_TAX_RATE);
 
         return BigDecimal.valueOf(amountAfterDeductions).subtract(incomeTax).setScale(2, RoundingMode.HALF_UP);
@@ -59,7 +48,7 @@ public class GrossSalary {
 
     @Override
     public String toString() {
-        return String.format("%-30s %-10s %s", "Brutopalk:", grossSalary, "100");
+        return String.format("%-30s %-10s %s", "Brutopalk:", getSalary(), "per cent");
     }
 
 }
