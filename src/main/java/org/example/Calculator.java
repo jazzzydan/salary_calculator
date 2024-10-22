@@ -26,7 +26,9 @@ public class Calculator {
         grossSalary.setGrossSalary(salary);
     }
 
-    public void calculateUsingNet(double salary) {}
+    public void calculateUsingNet(double salary) {
+
+    }
 
     public void calculateUsingTotal(double salary) {}
 

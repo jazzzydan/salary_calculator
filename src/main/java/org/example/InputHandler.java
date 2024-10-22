@@ -16,9 +16,9 @@ public class InputHandler {
 
         calc.calculateUsingGross(grossSalaryValue);
         System.out.println(String.format("%-30s %-10s %s", "TULEMUS", "EUR", "%"));
+        System.out.println(calc.getTotalSalary());
         System.out.println(calc.getGrossSalary());
         System.out.println(calc.getNetSalary());
-        System.out.println(calc.getTotalSalary());
-        //todo: correct null return in grossSalary and netSalary toString
+
     }
 }

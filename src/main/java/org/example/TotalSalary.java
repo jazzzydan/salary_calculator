@@ -13,4 +13,9 @@ public class TotalSalary {
     public void setTotalSalary(BigDecimal totalSalary) {
         this.totalSalary = totalSalary;
     }
+    @Override
+    public String toString() {
+        return String.format("%-30s %-10s %s", "Tööandja kulu kokku:", totalSalary, "100");
+    }
+
 }
