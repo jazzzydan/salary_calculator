@@ -2,45 +2,37 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CalculatorTest {
 
     Calculator calc = new Calculator();
 
-    @Test
-    public void pensionAmountTest() {
-        assertEquals(20, calc.pensionAmount(1000));
-    }
 
     @Test
-    public void unemploymentPaymentTest() {
-        assertEquals(16, calc.unemploymentPaymentAmount(1000));
-    }
-
-    @Test
-    public void extractPensionAndUnemploymentTest() {
-        assertEquals(964, calc.extractPensionAndUnemployment(1000));
+    public void totalDeductionsTest() {
+        assertEquals(964.0, calc.totalDeductions(1000));
     }
 
     @Test
     public void netSalaryCalculationTest() {
-        assertEquals(771.2, calc.netSalaryCalculation(1000, 0));
+        assertEquals(new BigDecimal("902.00"), calc.netSalaryCalculation(1000));
     }
 
     @Test
-    public void netSalaryCalculationWithTaxFreeIncomeTest() {
-        assertEquals(791.2, calc.netSalaryCalculation(1000, 100));
+    public void totalSalaryCalculationTest() {
+        assertEquals(new BigDecimal("1338.00"), calc.totalSalaryCalculation(1000));
     }
 
 //    @Test
 //    public void toStringTest() {
-//        assertEquals(771.2, calc.netSalaryCalculation(1000, 0));
-//        assertEquals("""
-//            TULEMUS         EUR        %
-//            Brutopalk       1000.00    100""", calc.toString().stripTrailing());
+//        assertEquals(new BigDecimal("771.20"), calc.netSalaryCalculation(BigDecimal.valueOf(1000), BigDecimal.valueOf(0)));
+//        assertEquals("TULEMUS         EUR        %    \n" +
+//                              "Brutopalk:      1000,00    100  \n" +
+//                              "", calc.toString().stripTrailing());
 //    }
-
 
 }
 
