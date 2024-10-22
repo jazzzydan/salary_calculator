@@ -20,7 +20,7 @@ public class InputHandler {
         input = input.replace(",", ".");
         BigDecimal taxFreeIncome = new BigDecimal(input.isEmpty() ? "0" : input);
 
-        calc.netSalaryCalculation(grossSalary);
-        System.out.println(calc);
+//        calc.netSalaryCalculation(grossSalary);
+//        System.out.println(calc);
     }
 }

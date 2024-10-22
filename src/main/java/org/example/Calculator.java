@@ -7,31 +7,19 @@ import static org.example.TaxParameters.*;
 
 public class Calculator {
 
-    public BigDecimal netSalaryCalculation(double grossSalary) {
-        GrossSalary grossSalaryObject = new GrossSalary();
+    TotalSalary totalSalary = new TotalSalary();
+    GrossSalary grossSalary = new GrossSalary();
+    NetSalary netSalary = new NetSalary();
 
-        double amountAfterDeductions = totalDeductions(grossSalary);
-        double taxableIncome = amountAfterDeductions - grossSalaryObject.calculateTaxFreeIncome(grossSalary).doubleValue();
-        BigDecimal incomeTax = BigDecimal.valueOf(taxableIncome * INCOME_TAX_RATE);
-        return BigDecimal.valueOf(amountAfterDeductions).subtract(incomeTax).setScale(2, RoundingMode.HALF_UP);
+    public void calculateUsingGross(double salary) {
+        netSalary.setNetSalary(grossSalary.netSalaryCalculation(salary));
+        totalSalary.setTotalSalary(grossSalary.totalSalaryCalculation(salary));
     }
 
-    public BigDecimal totalSalaryCalculation(double grossSalary) {
-        return BigDecimal.valueOf(grossSalary + totalAddition(grossSalary)).setScale(2, RoundingMode.HALF_UP);
-    }
+    public void calculateUsingNet(double salary) {}
 
-    double totalDeductions(double grossSalary) {
-        BigDecimal pensionAmount = pensionAmount(grossSalary);
-        BigDecimal unemploymentPaymentAmount = employeeUnemploymentPaymentAmount(grossSalary);
-        double totalDeductions = pensionAmount.add(unemploymentPaymentAmount).doubleValue();
-        return grossSalary - totalDeductions;
-    }
+    public void calculateUsingTotal(double salary) {}
 
-    double totalAddition(double grossSalary) {
-        BigDecimal socialTaxAmount = socialTaxAmount(grossSalary);
-        BigDecimal employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount(grossSalary);
-        return socialTaxAmount.add(employerUnemploymentPaymentAmount).doubleValue();
-    }
 
 
 //    @Override

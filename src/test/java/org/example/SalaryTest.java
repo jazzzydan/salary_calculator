@@ -18,7 +18,20 @@ public class SalaryTest {
         assertEquals(new BigDecimal("0.00"), grossSalary.calculateTaxFreeIncome(2100));
         assertEquals(new BigDecimal("0.00"), grossSalary.calculateTaxFreeIncome(2400));
     }
+    @Test
+    public void totalSalaryCalculationTest() {
+        assertEquals(new BigDecimal("1338.00"), grossSalary.totalSalaryCalculation(1000));
+    }
 
+    @Test
+    public void totalDeductionsTest() {
+        assertEquals(964.0, grossSalary.totalDeductions(1000));
+    }
+
+    @Test
+    public void netSalaryCalculationTest() {
+        assertEquals(new BigDecimal("902.00"), grossSalary.netSalaryCalculation(1000));
+    }
 
 }
 
