@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SalaryTest {
 
     GrossSalary grossSalary = new GrossSalary();
+    NetSalary netSalary = new NetSalary();
 
     @Test
     public void calculateTaxFreeIncomeTest() {
@@ -25,7 +26,7 @@ public class SalaryTest {
 
     @Test
     public void totalDeductionsTest() {
-        assertEquals(964.0, grossSalary.totalDeductions(1000));
+        assertEquals(964.0, grossSalary.calculateAmountBeforeIncomeTax(1000));
     }
 
     @Test
@@ -33,10 +34,10 @@ public class SalaryTest {
         assertEquals(new BigDecimal("902.00"), grossSalary.netSalaryCalculation(1000));
     }
 
-//    @Test
-//    public void grossSalaryCalculationTest() {
-//        assertEquals()
-//    }
+    @Test
+    public void negativeTaxableIncomeTest() {
+        assertEquals(new BigDecimal("645.88"),grossSalary.netSalaryCalculation(670));
+    }
 
 }
 

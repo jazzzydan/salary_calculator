@@ -1,7 +1,5 @@
 package org.example;
 
-import java.math.BigDecimal;
-
 public class Calculator {
 
     private final TotalSalary totalSalary = new TotalSalary();
@@ -20,10 +18,14 @@ public class Calculator {
         return netSalary;
     }
 
+//    private final Salary salary = new Salary();
+//todo: one Salary and one Getter
+
+
     public void calculateUsingGross(double salary) {
-        netSalary.setNetSalary(grossSalary.netSalaryCalculation(salary));
-        totalSalary.setTotalSalary(grossSalary.totalSalaryCalculation(salary));
-        grossSalary.setGrossSalary(salary);
+        netSalary.setSalary(grossSalary.netSalaryCalculation(salary));
+        totalSalary.setSalary(grossSalary.totalSalaryCalculation(salary));
+        grossSalary.setSalary(salary);
     }
 
     public void calculateUsingNet(double salary) {

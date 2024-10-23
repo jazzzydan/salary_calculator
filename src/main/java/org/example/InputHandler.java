@@ -1,24 +1,44 @@
 package org.example;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class InputHandler {
 
     Calculator calc = new Calculator();
-    Scanner scanner = new Scanner(System.in);
-
     public void processInput() {
-        System.out.println("Please enter Gross Salary: ");
-        String input = scanner.nextLine();
-        input = input.replace(",", ".");
-        double grossSalaryValue = Double.parseDouble(input.isEmpty() ? "0" : input);
+        Scanner scanner = new Scanner(System.in);
 
-        calc.calculateUsingGross(grossSalaryValue);
+        System.out.println("Please enter Salary type (NET, GROSS, TOTAL): ");
+        String typeInput = scanner.nextLine().toUpperCase();
+        Salary.Type type = Salary.Type.valueOf(typeInput);
+
+        //todo: handle wrong input for enum, negative input, wrong input for amount
+
+        System.out.println("Please enter Amount: ");
+        String amountInput = scanner.nextLine();
+        amountInput = amountInput.replace(",", ".");
+        double salaryValue = Double.parseDouble(amountInput.isEmpty() ? "0" : amountInput);
+        scanner.close();
+
+        switch (type) {
+            case GROSS:
+                calc.calculateUsingGross(salaryValue);
+                break;
+            case NET:
+                calc.calculateUsingNet(salaryValue);
+                break;
+            case TOTAL:
+                calc.calculateUsingTotal(salaryValue);
+                break;
+        }
+
         System.out.println(String.format("%-30s %-10s %s", "TULEMUS", "EUR", "%"));
         System.out.println(calc.getTotalSalary());
         System.out.println(calc.getGrossSalary());
         System.out.println(calc.getNetSalary());
 
     }
+
+
+
 }

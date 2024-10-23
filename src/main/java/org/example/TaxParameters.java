@@ -11,7 +11,6 @@ public class TaxParameters {
     static final double SOCIAL_TAX_RATE = 0.330;
     static final double EMPLOYER_UNEMPLOYMENT_TAX_RATE = 0.008;
 
-
     public static BigDecimal pensionAmount(double grossSalary) {
         return BigDecimal.valueOf(grossSalary * PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
@@ -27,6 +26,4 @@ public class TaxParameters {
     public static BigDecimal employerUnemploymentPaymentAmount(double grossSalary) {
         return BigDecimal.valueOf(grossSalary * EMPLOYER_UNEMPLOYMENT_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
-
-
 }
