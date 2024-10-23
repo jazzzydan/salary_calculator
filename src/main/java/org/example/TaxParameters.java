@@ -11,6 +11,13 @@ public class TaxParameters {
     static final BigDecimal SOCIAL_TAX_RATE = new BigDecimal("0.330");
     static final BigDecimal EMPLOYER_UNEMPLOYMENT_TAX_RATE = new BigDecimal("0.008");
 
+    static final BigDecimal NET_LOWER_LIMIT = new BigDecimal("1056.24");
+    static final BigDecimal NET_UPPER_LIMIT = new BigDecimal("1619.52");
+    static final BigDecimal GROSS_LOWER_LIMIT = new BigDecimal("1200.00");
+    static final BigDecimal GROSS_UPPER_LIMIT = new BigDecimal("2100.00");
+    static final BigDecimal BASE_TAX_FREE_INCOME = new BigDecimal("654.00");
+    static final BigDecimal TAX_FREE_INCOME_CONVERSION_RATE = new BigDecimal("0.72667");
+
     public static BigDecimal pensionAmount(BigDecimal grossSalary) {
         return grossSalary.multiply(PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
     }

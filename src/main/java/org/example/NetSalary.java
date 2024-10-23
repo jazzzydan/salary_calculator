@@ -1,10 +1,14 @@
 package org.example;
 
+import java.math.BigDecimal;
+
+import static org.example.TaxParameters.INCOME_TAX_RATE;
+
 public class NetSalary extends Salary {
 
-//    public void grossSalaryCalculationFromNet(double netSalary) {
-//
-//    }
+    public void grossSalaryCalculation(double netSalary) {
+
+    }
 
     @Override
     public String toString() {

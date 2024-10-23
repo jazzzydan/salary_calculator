@@ -23,16 +23,11 @@ public class GrossSalary extends Salary {
     }
 
     public BigDecimal calculateTaxFreeIncome(BigDecimal grossSalary) {
-        BigDecimal lowerLimit = new BigDecimal("1200.00");
-        BigDecimal upperLimit = new BigDecimal("2100.00");
-        BigDecimal baseTaxFreeIncome = new BigDecimal("654.00");
-        BigDecimal deductionRate = new BigDecimal("0.72667");
-
-        if (grossSalary.compareTo(lowerLimit) < 0) {
-            return baseTaxFreeIncome.setScale(2, RoundingMode.HALF_UP);
-        } else if (grossSalary.compareTo(upperLimit) < 0) {
-            BigDecimal taxableAmount = grossSalary.subtract(lowerLimit);
-            BigDecimal taxFreeIncome = baseTaxFreeIncome.subtract(deductionRate.multiply(taxableAmount));
+            if (grossSalary.compareTo(GROSS_LOWER_LIMIT) < 0) {
+            return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
+        } else if (grossSalary.compareTo(GROSS_UPPER_LIMIT) < 0) {
+            BigDecimal taxableAmount = grossSalary.subtract(GROSS_LOWER_LIMIT);
+            BigDecimal taxFreeIncome = BASE_TAX_FREE_INCOME.subtract(TAX_FREE_INCOME_CONVERSION_RATE.multiply(taxableAmount));
             return taxFreeIncome.setScale(2, RoundingMode.HALF_UP);
         }
         return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
