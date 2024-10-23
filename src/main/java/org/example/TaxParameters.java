@@ -5,25 +5,25 @@ import java.math.RoundingMode;
 
 public class TaxParameters {
 
-    static final double PENSION_RATE = 0.020;
-    static final double EMPLOYEE_UNEMPLOYMENT_RATE = 0.016;
-    static final double INCOME_TAX_RATE = 0.200;
-    static final double SOCIAL_TAX_RATE = 0.330;
-    static final double EMPLOYER_UNEMPLOYMENT_TAX_RATE = 0.008;
+    static final BigDecimal PENSION_RATE = new BigDecimal("0.020");
+    static final BigDecimal EMPLOYEE_UNEMPLOYMENT_RATE = new BigDecimal ("0.016");
+    static final BigDecimal INCOME_TAX_RATE = new BigDecimal("0.200");
+    static final BigDecimal SOCIAL_TAX_RATE = new BigDecimal("0.330");
+    static final BigDecimal EMPLOYER_UNEMPLOYMENT_TAX_RATE = new BigDecimal("0.008");
 
-    public static BigDecimal pensionAmount(double grossSalary) {
-        return BigDecimal.valueOf(grossSalary * PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
+    public static BigDecimal pensionAmount(BigDecimal grossSalary) {
+        return grossSalary.multiply(PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
 
-    public static BigDecimal employeeUnemploymentPaymentAmount(double grossSalary) {
-        return BigDecimal.valueOf(grossSalary * EMPLOYEE_UNEMPLOYMENT_RATE).setScale( 2, RoundingMode.HALF_UP);
+    public static BigDecimal employeeUnemploymentPaymentAmount(BigDecimal grossSalary) {
+        return grossSalary.multiply(EMPLOYEE_UNEMPLOYMENT_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
 
-    public static BigDecimal socialTaxAmount(double grossSalary) {
-        return BigDecimal.valueOf(grossSalary * SOCIAL_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
+    public static BigDecimal socialTaxAmount(BigDecimal grossSalary) {
+        return grossSalary.multiply(SOCIAL_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
 
-    public static BigDecimal employerUnemploymentPaymentAmount(double grossSalary) {
-        return BigDecimal.valueOf(grossSalary * EMPLOYER_UNEMPLOYMENT_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
+    public static BigDecimal employerUnemploymentPaymentAmount(BigDecimal grossSalary) {
+        return grossSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
 }

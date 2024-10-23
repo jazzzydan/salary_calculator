@@ -1,5 +1,7 @@
 package org.example;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -17,7 +19,8 @@ public class InputHandler {
         System.out.println("Please enter Amount: ");
         String amountInput = scanner.nextLine();
         amountInput = amountInput.replace(",", ".");
-        double salaryValue = Double.parseDouble(amountInput.isEmpty() ? "0" : amountInput);
+        BigDecimal salaryValue = new BigDecimal(amountInput.isEmpty() ? "0" : amountInput)
+                .setScale(2, RoundingMode.HALF_UP);
         scanner.close();
 
         switch (type) {
