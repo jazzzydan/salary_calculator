@@ -18,6 +18,9 @@ public class TaxParameters {
     static final BigDecimal BASE_TAX_FREE_INCOME = new BigDecimal("654.00");
     static final BigDecimal TAX_FREE_INCOME_CONVERSION_RATE = new BigDecimal("0.72667");
     static final BigDecimal GROSS_SALARY_CONVERSION_RATE = new BigDecimal("1.037344");
+    static final BigDecimal SOCIAL_TAX_REVERSE = new BigDecimal("0.2466367713");
+    static final BigDecimal EMPLOYER_UNEMPLOYMENT_TAX_REVERSE = new BigDecimal("0.00597907324");
+
 
     public static BigDecimal pensionAmount(BigDecimal grossSalary) {
         return grossSalary.multiply(PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
@@ -27,6 +30,14 @@ public class TaxParameters {
         return grossSalary.multiply(EMPLOYEE_UNEMPLOYMENT_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
 
+//    public static BigDecimal pensionAmountReverse(BigDecimal amountBeforeIncomeTax) {
+//        return amountBeforeIncomeTax.multiply(BigDecimal.valueOf(0.0166)).setScale(2, RoundingMode.HALF_UP);
+//    }
+//
+//    public static BigDecimal employeeUnemploymentPaymentAmountReverse(BigDecimal amountBeforeIncomeTax) {
+//        return amountBeforeIncomeTax.multiply(BigDecimal.valueOf(0.02074)).setScale(2, RoundingMode.HALF_UP);
+//    }
+
     public static BigDecimal socialTaxAmount(BigDecimal grossSalary) {
         return grossSalary.multiply(SOCIAL_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
@@ -34,4 +45,14 @@ public class TaxParameters {
     public static BigDecimal employerUnemploymentPaymentAmount(BigDecimal grossSalary) {
         return grossSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
+
+    public static BigDecimal socialTaxAmountReverse(BigDecimal grossSalary) {
+        return grossSalary.multiply(SOCIAL_TAX_REVERSE).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public static BigDecimal employerUnemploymentPaymentAmountReverse(BigDecimal grossSalary) {
+        return grossSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_REVERSE).setScale(2, RoundingMode.HALF_UP);
+    }
+
+
 }

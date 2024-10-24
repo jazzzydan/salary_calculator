@@ -30,6 +30,7 @@ public class NetSalary extends Salary {
         return amountBeforeIncomeTax.multiply(GROSS_SALARY_CONVERSION_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
+
     @Override
     public String toString() {
         return String.format("%-30s %-10s %s", "Netopalk:", getSalary(), "per cent");

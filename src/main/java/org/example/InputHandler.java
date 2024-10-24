@@ -24,11 +24,11 @@ public class InputHandler {
         scanner.close();
 
         switch (type) {
-            case GROSS:
-                calc.calculateUsingGross(salaryValue);
-                break;
             case NET:
                 calc.calculateUsingNet(salaryValue);
+                break;
+            case GROSS:
+                calc.calculateUsingGross(salaryValue);
                 break;
             case TOTAL:
                 calc.calculateUsingTotal(salaryValue);

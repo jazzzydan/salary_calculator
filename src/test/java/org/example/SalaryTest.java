@@ -10,8 +10,10 @@ public class SalaryTest {
 
     GrossSalary grossSalary = new GrossSalary();
     NetSalary netSalary = new NetSalary();
+    TotalSalary totalSalary = new TotalSalary();
 
     @Test
+
     public void calculateTaxFreeIncomeTest() {
         assertEquals(new BigDecimal("654.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1100)));
         assertEquals(new BigDecimal("654.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1200)));
@@ -19,6 +21,7 @@ public class SalaryTest {
         assertEquals(new BigDecimal("0.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(2100)));
         assertEquals(new BigDecimal("0.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(2400)));
     }
+
     @Test
     public void totalSalaryCalculationTest() {
         assertEquals(new BigDecimal("1338.00"), grossSalary.totalSalaryCalculation(BigDecimal.valueOf(1000)));
@@ -26,7 +29,7 @@ public class SalaryTest {
 
     @Test
     public void totalDeductionsTest() {
-        assertEquals(new BigDecimal( "964.00"), grossSalary.calculateAmountBeforeIncomeTax(BigDecimal.valueOf(1000)));
+        assertEquals(new BigDecimal("964.00"), grossSalary.calculateAmountBeforeIncomeTax(BigDecimal.valueOf(1000)));
 
     }
 
@@ -37,25 +40,32 @@ public class SalaryTest {
 
     @Test
     public void negativeTaxableIncomeTest() {
-        assertEquals(new BigDecimal("645.88"),grossSalary.netSalaryCalculation(BigDecimal.valueOf(670)));
+        assertEquals(new BigDecimal("645.88"), grossSalary.netSalaryCalculation(BigDecimal.valueOf(670)));
     }
 
     @Test
     public void calculateTaxFreeIncomeFromNetTest() {
-        assertEquals(new BigDecimal("138.77"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1500.00)));
-        assertEquals(new BigDecimal("0.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1619.52)));
-        assertEquals(new BigDecimal("654.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1056.24)));
-        assertEquals(new BigDecimal("0.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1700)));
-        assertEquals(new BigDecimal("654.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1000)));
+        assertEquals(new BigDecimal("138.77"), netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1500.00)));
+        assertEquals(new BigDecimal("0.00"), netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1619.52)));
+        assertEquals(new BigDecimal("654.00"), netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1056.24)));
+        assertEquals(new BigDecimal("0.00"), netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1700)));
+        assertEquals(new BigDecimal("654.00"), netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1000)));
     }
+
     @Test
-    public void calculateGrossSalary(){
-        assertEquals(new BigDecimal("1909.03"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1500.00)));
-        assertEquals(new BigDecimal("2100.00"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1619.52)));
-        assertEquals(new BigDecimal("1200.00"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1056.24)));
-        assertEquals(new BigDecimal("2204.36"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1700)));
-        assertEquals(new BigDecimal("1127.07"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1000)));
+    public void calculateGrossSalaryTest() {
+        assertEquals(new BigDecimal("1909.03"), netSalary.grossSalaryCalculation(BigDecimal.valueOf(1500.00)));
+        assertEquals(new BigDecimal("2100.00"), netSalary.grossSalaryCalculation(BigDecimal.valueOf(1619.52)));
+        assertEquals(new BigDecimal("1200.00"), netSalary.grossSalaryCalculation(BigDecimal.valueOf(1056.24)));
+        assertEquals(new BigDecimal("2204.36"), netSalary.grossSalaryCalculation(BigDecimal.valueOf(1700)));
+        assertEquals(new BigDecimal("1127.07"), netSalary.grossSalaryCalculation(BigDecimal.valueOf(1000)));
     }
+
+    @Test
+    public void calculateGrossFromTotal() {
+        assertEquals(new BigDecimal("1500.00"), totalSalary.grossSalaryCalculationFromTotal(BigDecimal.valueOf(2007)));
+    }
+
 
 }
 
