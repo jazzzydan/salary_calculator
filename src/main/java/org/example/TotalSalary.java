@@ -7,10 +7,12 @@ import static org.example.TaxParameters.*;
 
 public class TotalSalary extends Salary {
 
-    public BigDecimal grossSalaryCalculation(BigDecimal totalSalary){
-        BigDecimal socialTax = socialTaxAmountReverse(totalSalary);
+    public BigDecimal grossSalaryCalculation(BigDecimal totalSalary) {
+        BigDecimal socialTaxAmount = socialTaxAmountReverse(totalSalary);
+        setSocialTaxAmount(socialTaxAmount);
         BigDecimal employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmountReverse(totalSalary);
-        BigDecimal totalDeductions = socialTax.add(employerUnemploymentPaymentAmount);
+        setEmployerUnemploymentPaymentAmount(employerUnemploymentPaymentAmount);
+        BigDecimal totalDeductions = socialTaxAmount.add(employerUnemploymentPaymentAmount);
         return totalSalary.subtract(totalDeductions).setScale(2, RoundingMode.HALF_UP);
     }
 

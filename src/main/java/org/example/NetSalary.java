@@ -24,14 +24,17 @@ public class NetSalary extends Salary {
     public BigDecimal grossSalaryCalculation(BigDecimal netSalary) {
         BigDecimal taxFreeIncome = calculateTaxFreeIncome(netSalary);
         BigDecimal incomeTax = (netSalary.subtract(taxFreeIncome))
-                .divide(BigDecimal.valueOf(4), 9, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(4), 4, RoundingMode.HALF_UP);
+        setIncomeTax(incomeTax);
         BigDecimal taxableIncome = incomeTax.multiply(BigDecimal.valueOf(5));
         BigDecimal amountBeforeIncomeTax = taxableIncome.add(taxFreeIncome);
+
         return amountBeforeIncomeTax.multiply(GROSS_SALARY_CONVERSION_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override
     public String toString() {
-        return String.format("%-30s %-10s %s", "Netopalk:", getSalary(), "XXX");
+        return String.format("%-35s %-10s %s", "Netopalk:", getSalary(), "XXX");
     }
+
 }

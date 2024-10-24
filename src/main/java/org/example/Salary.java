@@ -8,6 +8,7 @@ import static org.example.TaxParameters.*;
 public class Salary {
     private BigDecimal salary;
 
+    private BigDecimal incomeTax;
     private BigDecimal pensionAmount;
     private BigDecimal unemploymentPaymentAmount;
     private BigDecimal socialTaxAmount;
@@ -29,12 +30,24 @@ public class Salary {
         this.salary = salary;
     }
 
-    public BigDecimal getPensionAmount() {
-        return pensionAmount;
+    public void setIncomeTax(BigDecimal incomeTax) {
+        this.incomeTax = incomeTax;
     }
 
-    public BigDecimal getEmployerUnemploymentPaymentAmount() {
-        return employerUnemploymentPaymentAmount;
+    public void setPensionAmount(BigDecimal pensionAmount) {
+        this.pensionAmount = pensionAmount;
+    }
+
+    public void setUnemploymentPaymentAmount(BigDecimal unemploymentPaymentAmount) {
+        this.unemploymentPaymentAmount = unemploymentPaymentAmount;
+    }
+
+    public void setSocialTaxAmount(BigDecimal socialTaxAmount) {
+        this.socialTaxAmount = socialTaxAmount;
+    }
+
+    public void setEmployerUnemploymentPaymentAmount(BigDecimal employerUnemploymentPaymentAmount) {
+        this.employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount;
     }
 
     BigDecimal netSalaryCalculation(BigDecimal grossSalary) {
@@ -83,24 +96,12 @@ public class Salary {
 
     @Override
     public String toString() {
-        return String.format("%-30s %-10s %s", "", salary, "XXX");
+        return String.format("%-35s %-10s %s", "", salary, "XXX");
     }
     public String pensionAmountToString() {
-        return String.format("%-30s %-10s %s", "", pensionAmount, "XXX");
+        return String.format("%-35s %-10s %s", "Kogumispension (II sammas):", pensionAmount, "XXX");
     }
-//    public String toString() {
-//        return String.format("%-30s %-10s %s", "", salary, "XXX");
-//    }
-//    public String toString() {
-//        return String.format("%-30s %-10s %s", "", salary, "XXX");
-//    }
-//    public String toString() {
-//        return String.format("%-30s %-10s %s", "", salary, "XXX");
-//    }
-
-//    private BigDecimal pensionAmount;
-//    private BigDecimal unemploymentPaymentAmount;
-//    private BigDecimal socialTaxAmount;
-//    private BigDecimal employerUnemploymentPaymentAmount;
-
+    public String unemploymentPaymentAmountToString() {
+        return String.format("%-35s %-10s %s", "Töötuskindlustusmakse (töötaja):", unemploymentPaymentAmount, "XXX");
+    }
 }

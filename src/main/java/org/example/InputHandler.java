@@ -6,22 +6,32 @@ import java.util.Scanner;
 
 public class InputHandler {
 
-    Calculator calc = new Calculator();
+   private final Calculator calc = new Calculator();
 
     public void processInput() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please enter Salary type (NET, GROSS, TOTAL): ");
         String typeInput = scanner.nextLine().toUpperCase();
-        Salary.Type type = Salary.Type.valueOf(typeInput);
-
-        //todo: handle wrong input for enum, negative input, wrong input for amount
+        Salary.Type type;
+        try {
+            type = Salary.Type.valueOf(typeInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid salary type: " + typeInput);
+            return;
+        }
 
         System.out.println("Please enter Amount: ");
         String amountInput = scanner.nextLine();
         amountInput = amountInput.replace(",", ".");
-        BigDecimal salaryValue = new BigDecimal(amountInput.isEmpty() ? "0" : amountInput)
-                .setScale(2, RoundingMode.HALF_UP);
+        BigDecimal salaryValue = BigDecimal.ZERO;
+        try {
+            salaryValue = new BigDecimal(amountInput.isEmpty() ? "0" : amountInput)
+                    .setScale(2, RoundingMode.HALF_UP);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format: " + amountInput);
+            return;
+        }
         scanner.close();
 
         switch (type) {
@@ -34,17 +44,20 @@ public class InputHandler {
             case TOTAL:
                 calc.calculateUsingTotal(salaryValue);
                 break;
+            default:
+                throw new IllegalArgumentException("Unknown salary type: " + type);
         }
-
-        System.out.println(String.format("%-30s %-10s %s", "TULEMUS", "EUR", "%"));
-        System.out.println(calc.getTotalSalary());
 
         //todo: finish table
 
+        System.out.println(String.format("%-35s %-10s %s", "TULEMUS", "EUR", "%"));
+        System.out.println(calc.getTotalSalary());
+        // Sotsiaalmaks:
+        // Töötuskindlustusmakse (tööandja):
         System.out.println(calc.getGrossSalary());
         System.out.println(calc.getSalary().pensionAmountToString());
-        System.out.println(String.format("%-30s %-10s %s", "Kogumispension (II sammas):", calc.getSalary().getPensionAmount(), "XXX"));
-
+        System.out.println(calc.getSalary().unemploymentPaymentAmountToString());
+//        System.out.println(calc.getSalary().netTaxAmountToString());
         System.out.println(calc.getNetSalary());
 
     }
