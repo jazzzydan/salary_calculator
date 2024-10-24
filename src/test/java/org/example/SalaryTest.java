@@ -40,6 +40,23 @@ public class SalaryTest {
         assertEquals(new BigDecimal("645.88"),grossSalary.netSalaryCalculation(BigDecimal.valueOf(670)));
     }
 
+    @Test
+    public void calculateTaxFreeIncomeFromNetTest() {
+        assertEquals(new BigDecimal("138.77"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1500.00)));
+        assertEquals(new BigDecimal("0.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1619.52)));
+        assertEquals(new BigDecimal("654.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1056.24)));
+        assertEquals(new BigDecimal("0.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1700)));
+        assertEquals(new BigDecimal("654.00"),netSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1000)));
+    }
+    @Test
+    public void calculateGrossSalary(){
+        assertEquals(new BigDecimal("1909.03"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1500.00)));
+        assertEquals(new BigDecimal("2100.00"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1619.52)));
+        assertEquals(new BigDecimal("1200.00"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1056.24)));
+        assertEquals(new BigDecimal("2204.36"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1700)));
+        assertEquals(new BigDecimal("1127.07"),netSalary.grossSalaryCalculation(BigDecimal.valueOf(1000)));
+    }
+
 }
 
 

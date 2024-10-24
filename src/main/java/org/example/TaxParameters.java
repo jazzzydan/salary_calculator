@@ -17,6 +17,7 @@ public class TaxParameters {
     static final BigDecimal GROSS_UPPER_LIMIT = new BigDecimal("2100.00");
     static final BigDecimal BASE_TAX_FREE_INCOME = new BigDecimal("654.00");
     static final BigDecimal TAX_FREE_INCOME_CONVERSION_RATE = new BigDecimal("0.72667");
+    static final BigDecimal GROSS_SALARY_CONVERSION_RATE = new BigDecimal("1.037344");
 
     public static BigDecimal pensionAmount(BigDecimal grossSalary) {
         return grossSalary.multiply(PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
