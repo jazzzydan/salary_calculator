@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class InputHandler {
 
     Calculator calc = new Calculator();
+
     public void processInput() {
         Scanner scanner = new Scanner(System.in);
 
@@ -37,11 +38,14 @@ public class InputHandler {
 
         System.out.println(String.format("%-30s %-10s %s", "TULEMUS", "EUR", "%"));
         System.out.println(calc.getTotalSalary());
+
+        //todo: finish table
+
         System.out.println(calc.getGrossSalary());
+        System.out.println(calc.getSalary().pensionAmountToString());
+        System.out.println(String.format("%-30s %-10s %s", "Kogumispension (II sammas):", calc.getSalary().getPensionAmount(), "XXX"));
+
         System.out.println(calc.getNetSalary());
 
     }
-
-
-
 }

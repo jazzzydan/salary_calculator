@@ -3,10 +3,13 @@ package org.example;
 import java.math.BigDecimal;
 
 public class Calculator {
-
+    private final Salary salary = new Salary();
     private final TotalSalary totalSalary = new TotalSalary();
     private final GrossSalary grossSalary = new GrossSalary();
     private final NetSalary netSalary = new NetSalary();
+    public Salary getSalary() {
+        return salary;
+    }
 
     public GrossSalary getGrossSalary() {
         return grossSalary;
@@ -20,8 +23,7 @@ public class Calculator {
         return netSalary;
     }
 
-//    private final Salary salary = new Salary();
-//todo: one Salary and one Getter
+    //todo: one Salary and one Getter
 
     public void calculateUsingGross(BigDecimal salary) {
         netSalary.setSalary(grossSalary.netSalaryCalculation(salary));
