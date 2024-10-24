@@ -50,15 +50,17 @@ public class InputHandler {
 
         //todo: finish table
 
-        System.out.println(String.format("%-35s %-10s %s", "TULEMUS", "EUR", "%"));
-        System.out.println(calc.getTotalSalary());
-        // Sotsiaalmaks:
-        // Töötuskindlustusmakse (tööandja):
-        System.out.println(calc.getGrossSalary());
-        System.out.println(calc.getSalary().pensionAmountToString());
-        System.out.println(calc.getSalary().unemploymentPaymentAmountToString());
-//        System.out.println(calc.getSalary().netTaxAmountToString());
-        System.out.println(calc.getNetSalary());
+        System.out.println(calc.getSalary());
+
+//        System.out.println(String.format("%-35s %-10s %s", "TULEMUS", "EUR", "%"));
+//        System.out.println(calc.getTotalSalary());
+//        // Sotsiaalmaks:
+//        // Töötuskindlustusmakse (tööandja):
+//        System.out.println(calc.getGrossSalary());
+//        System.out.println(calc.getSalary().pensionAmountToString());
+//        System.out.println(calc.getSalary().unemploymentPaymentAmountToString());
+////        System.out.println(calc.getSalary().netTaxAmountToString());
+//        System.out.println(calc.getNetSalary());
 
     }
 }

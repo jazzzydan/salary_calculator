@@ -96,12 +96,20 @@ public class Salary {
 
     @Override
     public String toString() {
-        return String.format("%-35s %-10s %s", "", salary, "XXX");
-    }
-    public String pensionAmountToString() {
-        return String.format("%-35s %-10s %s", "Kogumispension (II sammas):", pensionAmount, "XXX");
-    }
-    public String unemploymentPaymentAmountToString() {
-        return String.format("%-35s %-10s %s", "Töötuskindlustusmakse (töötaja):", unemploymentPaymentAmount, "XXX");
+        var table = new StringBuilder();
+        table.append(String.format("%-35s %-10s", "TULEMUS", "EUR"))
+                .append(System.lineSeparator())
+//                .append(getTotalSalary().toString())
+                .append(System.lineSeparator())
+//                .append(getGrossSalary().toString())
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Kogumispension (II sammas):", pensionAmount))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Töötuskindlustusmakse (töötaja):", unemploymentPaymentAmount))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Tulumaks:", incomeTax))
+                .append(System.lineSeparator());
+//                .append(getNetSalary().toString());
+        return table.toString();
     }
 }

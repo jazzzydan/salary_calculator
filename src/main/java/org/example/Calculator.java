@@ -29,7 +29,7 @@ public class Calculator {
         netSalary.setSalary(grossSalary.netSalaryCalculation(salary));
         grossSalary.setSalary(salary);
         totalSalary.setSalary(grossSalary.totalSalaryCalculation(salary));
-        currentSalary = grossSalary;
+//        currentSalary = grossSalary;
     }
 
     public void calculateUsingNet(BigDecimal salary) {
