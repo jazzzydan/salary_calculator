@@ -23,11 +23,10 @@ public class Calculator {
 //    private final Salary salary = new Salary();
 //todo: one Salary and one Getter
 
-
     public void calculateUsingGross(BigDecimal salary) {
         netSalary.setSalary(grossSalary.netSalaryCalculation(salary));
-        totalSalary.setSalary(grossSalary.totalSalaryCalculation(salary));
         grossSalary.setSalary(salary);
+        totalSalary.setSalary(grossSalary.totalSalaryCalculation(salary));
     }
 
     public void calculateUsingNet(BigDecimal salary) {
@@ -36,6 +35,9 @@ public class Calculator {
         totalSalary.setSalary(grossSalary.totalSalaryCalculation(grossSalary.getSalary()));
     }
 
-    public void calculateUsingTotal(BigDecimal salary) {}
-
+    public void calculateUsingTotal(BigDecimal salary) {
+        totalSalary.setSalary(salary);
+        grossSalary.setSalary(totalSalary.grossSalaryCalculation(salary));
+        netSalary.setSalary(grossSalary.netSalaryCalculation(grossSalary.getSalary()));
+    }
 }

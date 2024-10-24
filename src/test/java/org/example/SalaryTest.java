@@ -63,10 +63,8 @@ public class SalaryTest {
 
     @Test
     public void calculateGrossFromTotal() {
-        assertEquals(new BigDecimal("1500.00"), totalSalary.grossSalaryCalculationFromTotal(BigDecimal.valueOf(2007)));
+        assertEquals(new BigDecimal("1500.00"), totalSalary.grossSalaryCalculation(BigDecimal.valueOf(2007)));
     }
-
-
 }
 
 

@@ -12,9 +12,9 @@ public class NetSalary extends Salary {
             return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
         } else if (netSalary.compareTo(NET_UPPER_LIMIT) <= 0) {
             BigDecimal upperMinusNetSalary = NET_UPPER_LIMIT.subtract(netSalary);
-            BigDecimal upperMinusNetSalaryMultBaseTax = BASE_TAX_FREE_INCOME.multiply(upperMinusNetSalary);
+            BigDecimal upperMinusNetSalaryMultiplyBaseTax = BASE_TAX_FREE_INCOME.multiply(upperMinusNetSalary);
             BigDecimal upperNetLimitMinusLower = NET_UPPER_LIMIT.subtract(NET_LOWER_LIMIT);
-            return upperMinusNetSalaryMultBaseTax
+            return upperMinusNetSalaryMultiplyBaseTax
                     .divide(upperNetLimitMinusLower, 2, RoundingMode.HALF_UP)
                     .setScale(2, RoundingMode.HALF_UP);
         }
@@ -30,9 +30,8 @@ public class NetSalary extends Salary {
         return amountBeforeIncomeTax.multiply(GROSS_SALARY_CONVERSION_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
-
     @Override
     public String toString() {
-        return String.format("%-30s %-10s %s", "Netopalk:", getSalary(), "per cent");
+        return String.format("%-30s %-10s %s", "Netopalk:", getSalary(), "XXX");
     }
 }
