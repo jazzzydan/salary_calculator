@@ -8,34 +8,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SalaryTest {
 
-
-//    NetSalary netSalary = new NetSalary();
-//    TotalSalary totalSalary = new TotalSalary();
+    private static BigDecimal bd(String val) {
+        return new BigDecimal(val);
+    }
 
     @Test
     public void calculateTaxFreeIncomeTest() {
         GrossSalary grossSalary = new GrossSalary(BigDecimal.valueOf(1100));
-        assertEquals(new BigDecimal("654.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1100)));
-//        assertEquals(new BigDecimal("654.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1200)));
-//        assertEquals(new BigDecimal("508.67"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(1400)));
-//        assertEquals(new BigDecimal("0.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(2100)));
-//        assertEquals(new BigDecimal("0.00"), grossSalary.calculateTaxFreeIncome(BigDecimal.valueOf(2400)));
+        assertEquals(bd("654.00"), new GrossSalary(bd("1100")).calculateTaxFreeIncome());
+        assertEquals(bd("654.00"), new GrossSalary(bd("1200")).calculateTaxFreeIncome());
+        assertEquals(bd("508.67"), new GrossSalary(bd("1400")).calculateTaxFreeIncome());
+        assertEquals(bd("0.00"), new GrossSalary(bd("2100")).calculateTaxFreeIncome());
+        assertEquals(bd("0.00"), new GrossSalary(bd("2400")).calculateTaxFreeIncome());
     }
 
-//    @Test
-//    public void totalSalaryCalculationTest() {
-//        assertEquals(new BigDecimal("1338.00"), grossSalary.totalSalaryCalculation(BigDecimal.valueOf(1000)));
-//    }
-//
-//    @Test
-//    public void totalDeductionsTest() {
-//        assertEquals(new BigDecimal("964.00"), grossSalary.calculateAmountBeforeIncomeTax());
-//
-//    }
+    @Test
+    public void totalSalaryCalculationTest() {
+        assertEquals(bd("1338.00"), new GrossSalary(bd("1000")).totalSalaryCalculation());
+    }
+
+    @Test
+    public void totalDeductionsTest() {
+        assertEquals(bd("1349.60"), new GrossSalary(bd("1400")).calculateAmountBeforeIncomeTax());
+    }
 //
 //    @Test
 //    public void netSalaryCalculationTest() {
 //        assertEquals(new BigDecimal("902.00"), grossSalary.netSalaryCalculation(BigDecimal.valueOf(1000)));
+
 //    }
 //
 //    @Test
@@ -64,6 +64,16 @@ public class SalaryTest {
 //    @Test
 //    public void calculateGrossFromTotal() {
 //        assertEquals(new BigDecimal("1500.00"), totalSalary.grossSalaryCalculation(BigDecimal.valueOf(2007)));
+//    }
+
+    //    @Test
+//    public void pensionAmountTest() {
+//        assertEquals(new BigDecimal("20.00"), pensionAmount(BigDecimal.valueOf(1000)));
+//    }
+//
+//    @Test
+//    public void unemploymentPaymentTest() {
+//        assertEquals(new BigDecimal("16.00"), employeeUnemploymentPaymentAmount(BigDecimal.valueOf(1000)));
 //    }
 }
 

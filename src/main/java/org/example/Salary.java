@@ -16,6 +16,8 @@ public abstract class Salary {
     private final BigDecimal socialTaxAmount;
     private final BigDecimal totalSalary;
 
+    private boolean usePension = true;
+
     enum Type {
         NET,
         GROSS,
@@ -40,7 +42,8 @@ public abstract class Salary {
         this.totalSalary = totalSalaryCalculation();
         this.pensionAmount = pensionAmount();
         this.employeeUnemploymentPaymentAmount = employeeUnemploymentPaymentAmount();
-        this.netSalary = netSalaryCalculation(salary);
+        this.netSalary = netSalaryCalculation();
+
     }
 
     public BigDecimal pensionAmount() {
@@ -61,9 +64,9 @@ public abstract class Salary {
 
     public abstract BigDecimal calculateGrossSalary(BigDecimal salary);
 
-    BigDecimal netSalaryCalculation(BigDecimal grossSalary) {
+    BigDecimal netSalaryCalculation() {
         BigDecimal amountAfterDeductions = calculateAmountBeforeIncomeTax();
-        BigDecimal taxFreeIncome = calculateTaxFreeIncome(grossSalary);
+        BigDecimal taxFreeIncome = calculateTaxFreeIncome();
         BigDecimal taxableIncome = amountAfterDeductions.subtract(taxFreeIncome);
         if (taxableIncome.compareTo(BigDecimal.ZERO) < 0) {
             taxableIncome = BigDecimal.ZERO;
@@ -89,7 +92,7 @@ public abstract class Salary {
         return grossSalary.subtract(totalDeductions);
     }
 
-    BigDecimal calculateTaxFreeIncome(BigDecimal grossSalary) {
+    BigDecimal calculateTaxFreeIncome() {
         if (grossSalary.compareTo(GROSS_LOWER_LIMIT) <= 0) {
             return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
         } else if (grossSalary.compareTo(GROSS_UPPER_LIMIT) <= 0) {
