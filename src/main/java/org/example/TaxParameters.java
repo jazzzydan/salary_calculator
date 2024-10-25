@@ -22,20 +22,4 @@ public class TaxParameters {
     static final BigDecimal SOCIAL_TAX_REVERSE = new BigDecimal("0.2466367713");
     static final BigDecimal EMPLOYER_UNEMPLOYMENT_TAX_REVERSE = new BigDecimal("0.00597907324");
 
-//    public static BigDecimal pensionAmountReverse(BigDecimal amountBeforeIncomeTax) {
-//        return amountBeforeIncomeTax.multiply(BigDecimal.valueOf(0.0166)).setScale(2, RoundingMode.HALF_UP);
-//    }
-//
-//    public static BigDecimal employeeUnemploymentPaymentAmountReverse(BigDecimal amountBeforeIncomeTax) {
-//        return amountBeforeIncomeTax.multiply(BigDecimal.valueOf(0.02074)).setScale(2, RoundingMode.HALF_UP);
-//    }
-
-    public static BigDecimal socialTaxAmountReverse(BigDecimal grossSalary) {
-        return grossSalary.multiply(SOCIAL_TAX_REVERSE).setScale(2, RoundingMode.HALF_UP);
-    }
-
-    public static BigDecimal employerUnemploymentPaymentAmountReverse(BigDecimal grossSalary) {
-        return grossSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_REVERSE).setScale(2, RoundingMode.HALF_UP);
-    }
-
 }

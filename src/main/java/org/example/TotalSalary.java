@@ -18,4 +18,14 @@ public class TotalSalary extends Salary {
         BigDecimal totalDeductions = socialTax.add(employerUnemploymentPaymentAmount);
         return totalSalary.subtract(totalDeductions).setScale(2, RoundingMode.HALF_UP);
     }
+
+
+    BigDecimal socialTaxAmountReverse(BigDecimal totalSalary) {
+        return totalSalary.multiply(SOCIAL_TAX_REVERSE).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    BigDecimal employerUnemploymentPaymentAmountReverse(BigDecimal totalSalary) {
+        return totalSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_REVERSE).setScale(2, RoundingMode.HALF_UP);
+    }
+
 }

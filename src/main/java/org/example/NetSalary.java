@@ -19,7 +19,6 @@ public class NetSalary extends Salary {
         BigDecimal taxableIncome = incomeTax.multiply(BigDecimal.valueOf(5));
         BigDecimal amountBeforeIncomeTax = taxableIncome.add(taxFreeIncome);
         return amountBeforeIncomeTax.multiply(GROSS_SALARY_CONVERSION_RATE).setScale(2, RoundingMode.HALF_UP);
-
     }
 
     public BigDecimal calculateTaxFreeIncome(BigDecimal netSalary) {
@@ -34,14 +33,5 @@ public class NetSalary extends Salary {
                     .setScale(2, RoundingMode.HALF_UP);
         }
         return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
-    }
-
-    public BigDecimal grossSalaryCalculation(BigDecimal netSalary) {
-        BigDecimal taxFreeIncome = calculateTaxFreeIncome(netSalary);
-        BigDecimal incomeTax = (netSalary.subtract(taxFreeIncome))
-                .divide(BigDecimal.valueOf(4), 9, RoundingMode.HALF_UP);
-        BigDecimal taxableIncome = incomeTax.multiply(BigDecimal.valueOf(5));
-        BigDecimal amountBeforeIncomeTax = taxableIncome.add(taxFreeIncome);
-        return amountBeforeIncomeTax.multiply(GROSS_SALARY_CONVERSION_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 }

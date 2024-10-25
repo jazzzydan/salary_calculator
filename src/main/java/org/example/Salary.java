@@ -7,14 +7,14 @@ import static org.example.TaxParameters.*;
 
 public abstract class Salary {
 
-    private BigDecimal netSalary;
+    private final BigDecimal netSalary;
     private BigDecimal incomeTax;
-    private BigDecimal pensionAmount;
-    private BigDecimal employeeUnemploymentPaymentAmount;
-    private BigDecimal grossSalary;
-    private BigDecimal employerUnemploymentPaymentAmount;
-    private BigDecimal socialTaxAmount;
-    private BigDecimal totalSalary;
+    private final BigDecimal pensionAmount;
+    private final BigDecimal employeeUnemploymentPaymentAmount;
+    private final BigDecimal grossSalary;
+    private final BigDecimal employerUnemploymentPaymentAmount;
+    private final BigDecimal socialTaxAmount;
+    private final BigDecimal totalSalary;
 
     enum Type {
         NET,
@@ -40,7 +40,6 @@ public abstract class Salary {
         this.totalSalary = totalSalaryCalculation();
         this.pensionAmount = pensionAmount();
         this.employeeUnemploymentPaymentAmount = employeeUnemploymentPaymentAmount();
-        //incomeTax
         this.netSalary = netSalaryCalculation(salary);
     }
 
@@ -61,10 +60,6 @@ public abstract class Salary {
     }
 
     public abstract BigDecimal calculateGrossSalary(BigDecimal salary);
-
-    public BigDecimal getGrossSalary() {
-        return grossSalary;
-    }
 
     BigDecimal netSalaryCalculation(BigDecimal grossSalary) {
         BigDecimal amountAfterDeductions = calculateAmountBeforeIncomeTax();
