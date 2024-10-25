@@ -29,7 +29,7 @@ public class SalaryTest {
 
     @Test
     public void totalDeductionsTest() {
-        assertEquals(new BigDecimal("964.00"), grossSalary.calculateAmountBeforeIncomeTax(BigDecimal.valueOf(1000)));
+        assertEquals(new BigDecimal("964.00"), grossSalary.calculateAmountBeforeIncomeTax());
 
     }
 

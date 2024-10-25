@@ -5,9 +5,9 @@ import java.math.RoundingMode;
 
 import static org.example.TaxParameters.*;
 
-public class Salary {
-    private BigDecimal salary;
-
+public abstract class Salary {
+    private BigDecimal grossSalary;
+    private BigDecimal incomeTax;
     private BigDecimal pensionAmount;
     private BigDecimal unemploymentPaymentAmount;
     private BigDecimal socialTaxAmount;
@@ -19,26 +19,45 @@ public class Salary {
         TOTAL
     }
 
-    public Salary() {}
 
-    public BigDecimal getSalary() {
-        return salary;
+    public static Salary getNewSalary(BigDecimal salary, Salary.Type type) {
+        return switch (type) {
+            case NET:
+                yield new NetSalary(salary);
+            case GROSS:
+                yield new GrossSalary(salary);
+            case TOTAL:
+                yield new TotalSalary(salary);
+        };
     }
 
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+
+    public Salary(BigDecimal salary) {
+        this.grossSalary = calculateGrossSalary(salary);
+
+        this.pensionAmount = pensionAmount();
+    }
+
+    public BigDecimal pensionAmount() {
+        return grossSalary.multiply(PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
+    }
+
+    public abstract BigDecimal calculateGrossSalary(BigDecimal salary);
+
+    public BigDecimal getGrossSalary() {
+        return grossSalary;
+    }
+
+    public void setGrossSalary(BigDecimal grossSalary) {
+        this.grossSalary = grossSalary;
     }
 
     public BigDecimal getPensionAmount() {
         return pensionAmount;
     }
 
-    public BigDecimal getEmployerUnemploymentPaymentAmount() {
-        return employerUnemploymentPaymentAmount;
-    }
-
     BigDecimal netSalaryCalculation(BigDecimal grossSalary) {
-        BigDecimal amountAfterDeductions = calculateAmountBeforeIncomeTax(grossSalary);
+        BigDecimal amountAfterDeductions = calculateAmountBeforeIncomeTax();
         BigDecimal taxFreeIncome = calculateTaxFreeIncome(grossSalary);
         BigDecimal taxableIncome = amountAfterDeductions.subtract(taxFreeIncome);
         if (taxableIncome.compareTo(BigDecimal.ZERO) < 0) {
@@ -50,7 +69,7 @@ public class Salary {
     }
 
     BigDecimal totalSalaryCalculation(BigDecimal grossSalary) {
-        return  grossSalary.add(totalAdditionsToGrossSalary(grossSalary)).setScale(2, RoundingMode.HALF_UP);
+        return grossSalary.add(totalAdditionsToGrossSalary(grossSalary)).setScale(2, RoundingMode.HALF_UP);
     }
 
     BigDecimal totalAdditionsToGrossSalary(BigDecimal grossSalary) {
@@ -61,7 +80,7 @@ public class Salary {
         return socialTaxAmount.add(employerUnemploymentPaymentAmount);
     }
 
-    BigDecimal calculateAmountBeforeIncomeTax(BigDecimal grossSalary) {
+    BigDecimal calculateAmountBeforeIncomeTax() {
         BigDecimal pensionAmount = pensionAmount(grossSalary);
         this.pensionAmount = pensionAmount;
         BigDecimal unemploymentPaymentAmount = employeeUnemploymentPaymentAmount(grossSalary);
@@ -83,11 +102,9 @@ public class Salary {
 
     @Override
     public String toString() {
-        return String.format("%-30s %-10s %s", "", salary, "XXX");
+        return String.format("%-35s %-10s", "", grossSalary);
     }
-    public String pensionAmountToString() {
-        return String.format("%-30s %-10s %s", "", pensionAmount, "XXX");
-    }
+
 //    public String toString() {
 //        return String.format("%-30s %-10s %s", "", salary, "XXX");
 //    }

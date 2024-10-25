@@ -7,6 +7,21 @@ import static org.example.TaxParameters.*;
 
 public class NetSalary extends Salary {
 
+    public NetSalary(BigDecimal netSalary) {
+        super(netSalary);
+    }
+
+    @Override
+    public BigDecimal calculateGrossSalary(BigDecimal netSalary) {
+        BigDecimal taxFreeIncome = calculateTaxFreeIncome(netSalary);
+        BigDecimal incomeTax = (netSalary.subtract(taxFreeIncome))
+                .divide(BigDecimal.valueOf(4), 9, RoundingMode.HALF_UP);
+        BigDecimal taxableIncome = incomeTax.multiply(BigDecimal.valueOf(5));
+        BigDecimal amountBeforeIncomeTax = taxableIncome.add(taxFreeIncome);
+        return amountBeforeIncomeTax.multiply(GROSS_SALARY_CONVERSION_RATE).setScale(2, RoundingMode.HALF_UP);
+
+    }
+
     public BigDecimal calculateTaxFreeIncome(BigDecimal netSalary) {
         if (netSalary.compareTo(NET_LOWER_LIMIT) <= 0) {
             return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
@@ -32,6 +47,6 @@ public class NetSalary extends Salary {
 
     @Override
     public String toString() {
-        return String.format("%-30s %-10s %s", "Netopalk:", getSalary(), "XXX");
+        return String.format("%-30s %-10s", "Netopalk:", getGrossSalary());
     }
 }

@@ -7,15 +7,21 @@ import static org.example.TaxParameters.*;
 
 public class TotalSalary extends Salary {
 
-    public BigDecimal grossSalaryCalculation(BigDecimal totalSalary){
+    public TotalSalary(BigDecimal totalSalary) {
+        super(totalSalary);
+    }
+
+    @Override
+    public BigDecimal calculateGrossSalary(BigDecimal totalSalary) {
         BigDecimal socialTax = socialTaxAmountReverse(totalSalary);
         BigDecimal employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmountReverse(totalSalary);
         BigDecimal totalDeductions = socialTax.add(employerUnemploymentPaymentAmount);
         return totalSalary.subtract(totalDeductions).setScale(2, RoundingMode.HALF_UP);
     }
 
+
     @Override
     public String toString() {
-        return String.format("%-30s %-10s %s", "Tööandja kulu kokku:", getSalary(), "XXX");
+        return String.format("%-30s %-10s", "Tööandja kulu kokku:", getGrossSalary());
     }
 }
