@@ -52,8 +52,8 @@ public class InputHandler {
             return;
         }
         scanner.close();
-
-        Salary salary = Salary.getNewSalary(salaryValue, type, usePension, useUnemployment, useTaxFreeIncome);
+        InputConditions conditions = new InputConditions(usePension, useUnemployment, useTaxFreeIncome);
+        Salary salary = Salary.getNewSalary(salaryValue, type, conditions);
         System.out.println(salary);
     }
 }

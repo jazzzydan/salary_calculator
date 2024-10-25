@@ -26,26 +26,26 @@ public abstract class Salary {
         TOTAL
     }
 
-    public static Salary getNewSalary(BigDecimal salary, Salary.Type type, boolean usePension, boolean useUnemployment, boolean useTaxFreeIncome) {
+    public static Salary getNewSalary(BigDecimal salary, Salary.Type type, InputConditions conditions) {
         return switch (type) {
             case NET:
-                yield new NetSalary(salary, usePension, useUnemployment, useTaxFreeIncome);
+                yield new NetSalary(salary, conditions);
             case GROSS:
-                yield new GrossSalary(salary, usePension, useUnemployment, useTaxFreeIncome);
+                yield new GrossSalary(salary, conditions);
             case TOTAL:
-                yield new TotalSalary(salary, usePension, useUnemployment, useTaxFreeIncome);
+                yield new TotalSalary(salary, conditions);
         };
     }
 
-    public Salary(BigDecimal salary, boolean usePension, boolean useUnemployment, boolean useTaxFreeIncome) {
+    public Salary(BigDecimal salary, InputConditions conditions) {
         this.grossSalary = calculateGrossSalary(salary);
         this.socialTaxAmount = socialTaxAmount();
         this.employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount();
         this.totalSalary = totalSalaryCalculation();
 
-        this.usePension = usePension;
-        this.useUnemployment = useUnemployment;
-        this.useTaxFreeIncome = useTaxFreeIncome;
+        this.usePension = conditions.isUsePension();
+        this.useUnemployment = conditions.isUseUnemployment();
+        this.useTaxFreeIncome = conditions.isUseTaxFreeIncome();
 
         this.pensionAmount = pensionAmount();
         this.employeeUnemploymentPaymentAmount = employeeUnemploymentPaymentAmount();

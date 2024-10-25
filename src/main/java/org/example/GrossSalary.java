@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class GrossSalary extends Salary {
 
-    public GrossSalary(BigDecimal grossSalary, boolean usePension, boolean useUnemployment, boolean useTaxFreeIncome) {
-        super(grossSalary, usePension, useUnemployment, useTaxFreeIncome);
+    public GrossSalary(BigDecimal grossSalary, InputConditions conditions) {
+        super(grossSalary, conditions);
     }
 
     @Override
