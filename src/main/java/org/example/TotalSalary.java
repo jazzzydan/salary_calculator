@@ -7,8 +7,8 @@ import static org.example.TaxParameters.*;
 
 public class TotalSalary extends Salary {
 
-    public TotalSalary(BigDecimal totalSalary) {
-        super(totalSalary);
+    public TotalSalary(BigDecimal totalSalary, boolean usePension, boolean useUnemployment, boolean useTaxFreeIncome) {
+        super(totalSalary, usePension, useUnemployment, useTaxFreeIncome);
     }
 
     @Override

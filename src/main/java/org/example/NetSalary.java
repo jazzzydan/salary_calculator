@@ -7,8 +7,8 @@ import static org.example.TaxParameters.*;
 
 public class NetSalary extends Salary {
 
-    public NetSalary(BigDecimal netSalary) {
-        super(netSalary);
+    public NetSalary(BigDecimal netSalary, boolean usePension, boolean useUnemployment, boolean useTaxFreeIncome) {
+        super(netSalary, usePension, useUnemployment, useTaxFreeIncome);
     }
 
     @Override

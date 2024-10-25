@@ -16,7 +16,9 @@ public abstract class Salary {
     private final BigDecimal socialTaxAmount;
     private final BigDecimal totalSalary;
 
-    private boolean usePension = true;
+    private boolean usePension;
+    private boolean useUnemployment;
+    private boolean useTaxFreeIncome;
 
     enum Type {
         NET,
@@ -24,42 +26,54 @@ public abstract class Salary {
         TOTAL
     }
 
-    public static Salary getNewSalary(BigDecimal salary, Salary.Type type) {
+    public static Salary getNewSalary(BigDecimal salary, Salary.Type type, boolean usePension, boolean useUnemployment, boolean useTaxFreeIncome) {
         return switch (type) {
             case NET:
-                yield new NetSalary(salary);
+                yield new NetSalary(salary, usePension, useUnemployment, useTaxFreeIncome);
             case GROSS:
-                yield new GrossSalary(salary);
+                yield new GrossSalary(salary, usePension, useUnemployment, useTaxFreeIncome);
             case TOTAL:
-                yield new TotalSalary(salary);
+                yield new TotalSalary(salary, usePension, useUnemployment, useTaxFreeIncome);
         };
     }
 
-    public Salary(BigDecimal salary) {
+    public Salary(BigDecimal salary, boolean usePension, boolean useUnemployment, boolean useTaxFreeIncome) {
         this.grossSalary = calculateGrossSalary(salary);
         this.socialTaxAmount = socialTaxAmount();
         this.employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount();
         this.totalSalary = totalSalaryCalculation();
+
+        this.usePension = usePension;
+        this.useUnemployment = useUnemployment;
+        this.useTaxFreeIncome = useTaxFreeIncome;
+
         this.pensionAmount = pensionAmount();
         this.employeeUnemploymentPaymentAmount = employeeUnemploymentPaymentAmount();
         this.netSalary = netSalaryCalculation();
 
+
     }
 
     public BigDecimal pensionAmount() {
-        return grossSalary.multiply(PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
+        if (usePension) {
+            return grossSalary.multiply(PENSION_RATE).setScale(2, RoundingMode.HALF_UP);
+        }
+        return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal employeeUnemploymentPaymentAmount() {
-        return grossSalary.multiply(EMPLOYEE_UNEMPLOYMENT_RATE).setScale( 2, RoundingMode.HALF_UP);
+        if (useUnemployment) {
+            return grossSalary.multiply(EMPLOYEE_UNEMPLOYMENT_RATE).setScale(2, RoundingMode.HALF_UP);
+        }
+        return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal employerUnemploymentPaymentAmount() {
-        return grossSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
+        return grossSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal socialTaxAmount() {
-        return grossSalary.multiply(SOCIAL_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
+        return grossSalary.multiply(SOCIAL_TAX_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
     public abstract BigDecimal calculateGrossSalary(BigDecimal salary);
@@ -93,12 +107,15 @@ public abstract class Salary {
     }
 
     BigDecimal calculateTaxFreeIncome() {
-        if (grossSalary.compareTo(GROSS_LOWER_LIMIT) <= 0) {
-            return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
-        } else if (grossSalary.compareTo(GROSS_UPPER_LIMIT) <= 0) {
-            BigDecimal taxableAmount = grossSalary.subtract(GROSS_LOWER_LIMIT);
-            BigDecimal taxFreeIncome = BASE_TAX_FREE_INCOME.subtract(TAX_FREE_INCOME_CONVERSION_RATE.multiply(taxableAmount));
-            return taxFreeIncome.setScale(2, RoundingMode.HALF_UP);
+        if (useTaxFreeIncome) {
+            if (grossSalary.compareTo(GROSS_LOWER_LIMIT) <= 0) {
+                return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
+            } else if (grossSalary.compareTo(GROSS_UPPER_LIMIT) <= 0) {
+                BigDecimal taxableAmount = grossSalary.subtract(GROSS_LOWER_LIMIT);
+                BigDecimal taxFreeIncome = BASE_TAX_FREE_INCOME.subtract(TAX_FREE_INCOME_CONVERSION_RATE.multiply(taxableAmount));
+                return taxFreeIncome.setScale(2, RoundingMode.HALF_UP);
+            }
+            return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         }
         return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
     }
@@ -120,7 +137,7 @@ public abstract class Salary {
                 .append(System.lineSeparator())
                 .append(String.format("%-35s %-10s", "Töötuskindlustusmakse (töötaja):", employeeUnemploymentPaymentAmount))
                 .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Tulumaks:", incomeTax.setScale(2,RoundingMode.HALF_UP)))
+                .append(String.format("%-35s %-10s", "Tulumaks:", incomeTax.setScale(2, RoundingMode.HALF_UP)))
                 .append(System.lineSeparator())
                 .append(String.format("%-35s %-10s", "Netopalk:", netSalary));
         return table.toString();
