@@ -12,10 +12,4 @@ public class GrossSalary extends Salary {
     public BigDecimal calculateGrossSalary(BigDecimal grossSalary) {
         return grossSalary;
     }
-
-    @Override
-    public String toString() {
-        return String.format("%-30s %-10s", "Brutopalk:", getGrossSalary());
-    }
-
 }

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CalculatorTest {
 
-    Calculator calc = new Calculator();
+//    Calculator calc = new Calculator();
 
 }
 

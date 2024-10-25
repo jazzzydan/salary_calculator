@@ -6,19 +6,21 @@ import java.math.RoundingMode;
 import static org.example.TaxParameters.*;
 
 public abstract class Salary {
-    private BigDecimal grossSalary;
+
+    private BigDecimal netSalary;
     private BigDecimal incomeTax;
     private BigDecimal pensionAmount;
-    private BigDecimal unemploymentPaymentAmount;
-    private BigDecimal socialTaxAmount;
+    private BigDecimal employeeUnemploymentPaymentAmount;
+    private BigDecimal grossSalary;
     private BigDecimal employerUnemploymentPaymentAmount;
+    private BigDecimal socialTaxAmount;
+    private BigDecimal totalSalary;
 
     enum Type {
         NET,
         GROSS,
         TOTAL
     }
-
 
     public static Salary getNewSalary(BigDecimal salary, Salary.Type type) {
         return switch (type) {
@@ -31,29 +33,37 @@ public abstract class Salary {
         };
     }
 
-
     public Salary(BigDecimal salary) {
         this.grossSalary = calculateGrossSalary(salary);
-
+        this.socialTaxAmount = socialTaxAmount();
+        this.employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount();
+        this.totalSalary = totalSalaryCalculation();
         this.pensionAmount = pensionAmount();
+        this.employeeUnemploymentPaymentAmount = employeeUnemploymentPaymentAmount();
+        //incomeTax
+        this.netSalary = netSalaryCalculation(salary);
     }
 
     public BigDecimal pensionAmount() {
         return grossSalary.multiply(PENSION_RATE).setScale( 2, RoundingMode.HALF_UP);
     }
 
+    public BigDecimal employeeUnemploymentPaymentAmount() {
+        return grossSalary.multiply(EMPLOYEE_UNEMPLOYMENT_RATE).setScale( 2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal employerUnemploymentPaymentAmount() {
+        return grossSalary.multiply(EMPLOYER_UNEMPLOYMENT_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal socialTaxAmount() {
+        return grossSalary.multiply(SOCIAL_TAX_RATE).setScale( 2, RoundingMode.HALF_UP);
+    }
+
     public abstract BigDecimal calculateGrossSalary(BigDecimal salary);
 
     public BigDecimal getGrossSalary() {
         return grossSalary;
-    }
-
-    public void setGrossSalary(BigDecimal grossSalary) {
-        this.grossSalary = grossSalary;
-    }
-
-    public BigDecimal getPensionAmount() {
-        return pensionAmount;
     }
 
     BigDecimal netSalaryCalculation(BigDecimal grossSalary) {
@@ -64,27 +74,22 @@ public abstract class Salary {
             taxableIncome = BigDecimal.ZERO;
         }
         BigDecimal incomeTax = taxableIncome.multiply(INCOME_TAX_RATE);
+        this.incomeTax = incomeTax;
         return amountAfterDeductions.subtract(incomeTax).setScale(2, RoundingMode.HALF_UP);
-        //todo: set to Salary value
     }
 
-    BigDecimal totalSalaryCalculation(BigDecimal grossSalary) {
-        return grossSalary.add(totalAdditionsToGrossSalary(grossSalary)).setScale(2, RoundingMode.HALF_UP);
+    BigDecimal totalSalaryCalculation() {
+        return grossSalary.add(totalAdditionsToGrossSalary()).setScale(2, RoundingMode.HALF_UP);
     }
 
-    BigDecimal totalAdditionsToGrossSalary(BigDecimal grossSalary) {
-        BigDecimal socialTaxAmount = socialTaxAmount(grossSalary);
-        this.socialTaxAmount = socialTaxAmount;
-        BigDecimal employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount(grossSalary);
-        this.unemploymentPaymentAmount = employerUnemploymentPaymentAmount;
+    BigDecimal totalAdditionsToGrossSalary() {
+        BigDecimal socialTaxAmount = socialTaxAmount();
+        BigDecimal employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount();
         return socialTaxAmount.add(employerUnemploymentPaymentAmount);
     }
 
     BigDecimal calculateAmountBeforeIncomeTax() {
-        BigDecimal pensionAmount = pensionAmount(grossSalary);
-        this.pensionAmount = pensionAmount;
-        BigDecimal unemploymentPaymentAmount = employeeUnemploymentPaymentAmount(grossSalary);
-        this.unemploymentPaymentAmount = unemploymentPaymentAmount;
+        BigDecimal unemploymentPaymentAmount = employeeUnemploymentPaymentAmount();
         BigDecimal totalDeductions = pensionAmount.add(unemploymentPaymentAmount);
         return grossSalary.subtract(totalDeductions);
     }
@@ -102,22 +107,24 @@ public abstract class Salary {
 
     @Override
     public String toString() {
-        return String.format("%-35s %-10s", "", grossSalary);
+        var table = new StringBuilder();
+        table.append(String.format("%-35s %-10s", "TULEMUS", "EUR"))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Tööandja kulu kokku (palgafond):", totalSalary))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Sotsiaalmaks:", socialTaxAmount))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Töötuskindlustusmakse (tööandja):", employerUnemploymentPaymentAmount))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Brutopalk:", grossSalary))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Kogumispension (II sammas):", pensionAmount))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Töötuskindlustusmakse (töötaja):", employeeUnemploymentPaymentAmount))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Tulumaks:", incomeTax.setScale(2,RoundingMode.HALF_UP)))
+                .append(System.lineSeparator())
+                .append(String.format("%-35s %-10s", "Netopalk:", netSalary));
+        return table.toString();
     }
-
-//    public String toString() {
-//        return String.format("%-30s %-10s %s", "", salary, "XXX");
-//    }
-//    public String toString() {
-//        return String.format("%-30s %-10s %s", "", salary, "XXX");
-//    }
-//    public String toString() {
-//        return String.format("%-30s %-10s %s", "", salary, "XXX");
-//    }
-
-//    private BigDecimal pensionAmount;
-//    private BigDecimal unemploymentPaymentAmount;
-//    private BigDecimal socialTaxAmount;
-//    private BigDecimal employerUnemploymentPaymentAmount;
-
 }

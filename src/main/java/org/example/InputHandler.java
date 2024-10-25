@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class InputHandler {
 
-    Calculator calc = new Calculator();
-
     public void processInput() {
         Scanner scanner = new Scanner(System.in);
 
@@ -35,17 +33,19 @@ public class InputHandler {
         scanner.close();
 
         Salary salary = Salary.getNewSalary(salaryValue, type);
+        System.out.println(salary);
+
         //todo: finish table
-        System.out.println(String.format("%-30s %-10s", "TULEMUS", "EUR"));
-        System.out.println(calc.getTotalSalary());
-        // Sotsiaalmaks:
-        // Töötuskindlustusmakse (tööandja):
-        System.out.println(calc.getGrossSalary());
-
-        System.out.println(calc.getSalary().pensionAmountToString());
-        System.out.println(String.format("%-30s %-10s", "Kogumispension (II sammas):", calc.getSalary().getPensionAmount()));
-
-        System.out.println(calc.getNetSalary());
+//        System.out.println(String.format("%-30s %-10s", "TULEMUS", "EUR"));
+//        System.out.println(calc.getTotalSalary());
+//        // Sotsiaalmaks:
+//        // Töötuskindlustusmakse (tööandja):
+//        System.out.println(calc.getGrossSalary());
+//
+//        System.out.println(calc.getSalary().pensionAmountToString());
+//        System.out.println(String.format("%-30s %-10s", "Kogumispension (II sammas):", calc.getSalary().getPensionAmount()));
+//
+//        System.out.println(calc.getNetSalary());
 
     }
 }

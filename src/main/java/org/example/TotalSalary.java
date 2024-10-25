@@ -18,10 +18,4 @@ public class TotalSalary extends Salary {
         BigDecimal totalDeductions = socialTax.add(employerUnemploymentPaymentAmount);
         return totalSalary.subtract(totalDeductions).setScale(2, RoundingMode.HALF_UP);
     }
-
-
-    @Override
-    public String toString() {
-        return String.format("%-30s %-10s", "Tööandja kulu kokku:", getGrossSalary());
-    }
 }
