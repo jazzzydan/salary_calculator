@@ -20,58 +20,13 @@ public class InputHandler {
         }
 
         boolean usePension = true;
-        while (true) {
-            try {
-                System.out.print("Do you want to use pension in calculation (Y / N): ");
-                String useCaseInput = scanner.nextLine().toUpperCase();
-                if (useCaseInput.equals("Y")) {
-                    break;
-                } else if (useCaseInput.equals("N")) {
-                    usePension = false;
-                    break;
-                } else {
-                    System.out.println("Invalid input. Please enter 'Y' or 'N'.");
-                }
-            } catch (Exception e) {
-                System.out.println("An unexpected error occurred: " + e.getMessage());
-            }
-        }
+        usePension = checkInputCondition("Do you want to use pension in calculation (Y / N): ", scanner, usePension);
 
         boolean useUnemployment = true;
-        while (true) {
-            try {
-                System.out.print("Do you want to use unemployment tax in calculation (Y / N): ");
-                String unemploymentInput = scanner.nextLine().toUpperCase();
-                if (unemploymentInput.equals("Y")) {
-                    break;
-                } else if (unemploymentInput.equals("N")) {
-                    useUnemployment = false;
-                    break;
-                } else {
-                    System.out.println("Invalid input. Please enter 'Y' or 'N'.");
-                }
-            } catch (Exception e) {
-                System.out.println("An unexpected error occurred: " + e.getMessage());
-            }
-        }
+        useUnemployment = checkInputCondition("Do you want to use unemployment tax in calculation (Y / N): ", scanner, useUnemployment);
 
         boolean useTaxFreeIncome = true;
-        while (true) {
-            try {
-                System.out.print("Do you want to use tax-free income in calculation (Y / N): ");
-                String taxFreeInput = scanner.nextLine().toUpperCase();
-                if (taxFreeInput.equals("Y")) {
-                    break;
-                } else if (taxFreeInput.equals("N")) {
-                    useTaxFreeIncome = false;
-                    break;
-                } else {
-                    System.out.println("Invalid input. Please enter 'Y' or 'N'.");
-                }
-            } catch (Exception e) {
-                System.out.println("An unexpected error occurred: " + e.getMessage());
-            }
-        }
+        useTaxFreeIncome = checkInputCondition("Do you want to use tax-free income in calculation (Y / N): ", scanner, useTaxFreeIncome);
 
         System.out.println("Please enter Amount: ");
         String amountInput = scanner.nextLine();
@@ -88,5 +43,25 @@ public class InputHandler {
         InputConditions conditions = new InputConditions(usePension, useUnemployment, useTaxFreeIncome);
         Salary salary = Salary.getNewSalary(salaryValue, type, conditions);
         System.out.println(salary);
+    }
+
+    private static boolean checkInputCondition(String s, Scanner scanner, boolean usePension) {
+        while (true) {
+            try {
+                System.out.print(s);
+                String useCaseInput = scanner.nextLine().toUpperCase();
+                if (useCaseInput.equals("Y")) {
+                    break;
+                } else if (useCaseInput.equals("N")) {
+                    usePension = false;
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter 'Y' or 'N'.");
+                }
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
+        }
+        return usePension;
     }
 }
