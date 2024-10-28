@@ -50,8 +50,6 @@ public abstract class Salary {
         this.pensionAmount = pensionAmount();
         this.employeeUnemploymentPaymentAmount = employeeUnemploymentPaymentAmount();
         this.netSalary = netSalaryCalculation();
-
-
     }
 
     public BigDecimal pensionAmount() {
@@ -123,23 +121,22 @@ public abstract class Salary {
     @Override
     public String toString() {
         var table = new StringBuilder();
-        table.append(String.format("%-35s %-10s", "TULEMUS", "EUR"))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Tööandja kulu kokku (palgafond):", totalSalary))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Sotsiaalmaks:", socialTaxAmount))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Töötuskindlustusmakse (tööandja):", employerUnemploymentPaymentAmount))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Brutopalk:", grossSalary))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Kogumispension (II sammas):", pensionAmount))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Töötuskindlustusmakse (töötaja):", employeeUnemploymentPaymentAmount))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Tulumaks:", incomeTax.setScale(2, RoundingMode.HALF_UP)))
-                .append(System.lineSeparator())
-                .append(String.format("%-35s %-10s", "Netopalk:", netSalary));
+        String[][] rows = {
+                {"TULEMUS", "EUR"},
+                {"Tööandja kulu kokku (palgafond):", totalSalary.toString()},
+                {"Sotsiaalmaks:", socialTaxAmount.toString()},
+                {"Töötuskindlustusmakse (tööandja):", employerUnemploymentPaymentAmount.toString()},
+                {"Brutopalk:", grossSalary.toString()},
+                {"Kogumispension (II sammas):", pensionAmount.toString()},
+                {"Töötuskindlustusmakse (töötaja):", employeeUnemploymentPaymentAmount.toString()},
+                {"Tulumaks:", incomeTax.setScale(2, RoundingMode.HALF_UP).toString()},
+                {"Netopalk:", netSalary.toString()}
+        };
+
+        for (String[] row : rows) {
+            table.append(String.format("%-35s %-10s", row[0], row[1]))
+                    .append(System.lineSeparator());
+        }
         return table.toString();
     }
 }
