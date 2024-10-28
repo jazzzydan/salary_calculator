@@ -19,25 +19,58 @@ public class InputHandler {
             return;
         }
 
-        System.out.println("Do you want to use pension in calculation (Y / N): ");
-        String pension = scanner.nextLine().toUpperCase();
         boolean usePension = true;
-        if (pension.equals("N")) {
-            usePension = false;
+        while (true) {
+            try {
+                System.out.print("Do you want to use pension in calculation (Y / N): ");
+                String useCaseInput = scanner.nextLine().toUpperCase();
+                if (useCaseInput.equals("Y")) {
+                    break;
+                } else if (useCaseInput.equals("N")) {
+                    usePension = false;
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter 'Y' or 'N'.");
+                }
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
         }
 
-        System.out.println("Do you want to use unemployment tax in calculation (Y / N): ");
-        String unemployment = scanner.nextLine().toUpperCase();
         boolean useUnemployment = true;
-        if (unemployment.equals("N")) {
-            useUnemployment = false;
+        while (true) {
+            try {
+                System.out.print("Do you want to use unemployment tax in calculation (Y / N): ");
+                String unemploymentInput = scanner.nextLine().toUpperCase();
+                if (unemploymentInput.equals("Y")) {
+                    break;
+                } else if (unemploymentInput.equals("N")) {
+                    useUnemployment = false;
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter 'Y' or 'N'.");
+                }
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
         }
 
-        System.out.println("Do you want to use taxfree income in calculation (Y / N): ");
-        String taxfree = scanner.nextLine().toUpperCase();
         boolean useTaxFreeIncome = true;
-        if (taxfree.equals("N")) {
-            useTaxFreeIncome = false;
+        while (true) {
+            try {
+                System.out.print("Do you want to use tax-free income in calculation (Y / N): ");
+                String taxFreeInput = scanner.nextLine().toUpperCase();
+                if (taxFreeInput.equals("Y")) {
+                    break;
+                } else if (taxFreeInput.equals("N")) {
+                    useTaxFreeIncome = false;
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter 'Y' or 'N'.");
+                }
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
         }
 
         System.out.println("Please enter Amount: ");
