@@ -12,7 +12,7 @@ public class TotalSalary extends Salary {
     }
 
     @Override
-    public BigDecimal calculateGrossSalary(BigDecimal totalSalary) {
+    public BigDecimal calculateGrossSalary(BigDecimal totalSalary, InputConditions conditions) {
         BigDecimal socialTax = socialTaxAmountReverse(totalSalary);
         BigDecimal employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmountReverse(totalSalary);
         BigDecimal totalDeductions = socialTax.add(employerUnemploymentPaymentAmount);

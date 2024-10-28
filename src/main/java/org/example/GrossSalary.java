@@ -9,7 +9,7 @@ public class GrossSalary extends Salary {
     }
 
     @Override
-    public BigDecimal calculateGrossSalary(BigDecimal grossSalary) {
+    public BigDecimal calculateGrossSalary(BigDecimal grossSalary, InputConditions conditions) {
         return grossSalary;
     }
 }

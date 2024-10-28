@@ -38,7 +38,7 @@ public abstract class Salary {
     }
 
     public Salary(BigDecimal salary, InputConditions conditions) {
-        this.grossSalary = calculateGrossSalary(salary);
+        this.grossSalary = calculateGrossSalary(salary, conditions);
         this.socialTaxAmount = socialTaxAmount();
         this.employerUnemploymentPaymentAmount = employerUnemploymentPaymentAmount();
         this.totalSalary = totalSalaryCalculation();
@@ -74,7 +74,7 @@ public abstract class Salary {
         return grossSalary.multiply(SOCIAL_TAX_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
-    public abstract BigDecimal calculateGrossSalary(BigDecimal salary);
+    public abstract BigDecimal calculateGrossSalary(BigDecimal salary, InputConditions conditions);
 
     BigDecimal netSalaryCalculation() {
         BigDecimal amountAfterDeductions = calculateAmountBeforeIncomeTax();
