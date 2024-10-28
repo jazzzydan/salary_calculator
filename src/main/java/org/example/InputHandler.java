@@ -45,7 +45,7 @@ public class InputHandler {
         System.out.println(salary);
     }
 
-    private static boolean checkInputCondition(String s, Scanner scanner, boolean usePension) {
+    private boolean checkInputCondition(String s, Scanner scanner, boolean usePension) {
         while (true) {
             try {
                 System.out.print(s);

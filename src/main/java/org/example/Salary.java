@@ -79,13 +79,23 @@ public abstract class Salary {
     BigDecimal netSalaryCalculation() {
         BigDecimal amountAfterDeductions = calculateAmountBeforeIncomeTax();
         BigDecimal taxFreeIncome = calculateTaxFreeIncome();
-        BigDecimal taxableIncome = amountAfterDeductions.subtract(taxFreeIncome);
-        if (taxableIncome.compareTo(BigDecimal.ZERO) < 0) {
-            taxableIncome = BigDecimal.ZERO;
-        }
+        BigDecimal taxableIncome = calculateTaxableIncome(amountAfterDeductions, taxFreeIncome);
         BigDecimal incomeTax = taxableIncome.multiply(INCOME_TAX_RATE);
         this.incomeTax = incomeTax;
         return amountAfterDeductions.subtract(incomeTax).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal calculateTaxableIncome(BigDecimal amountAfterDeductions, BigDecimal taxFreeIncome) {
+        BigDecimal taxableIncome = amountAfterDeductions.subtract(taxFreeIncome);
+        if (calculatedTaxableIncomeIsPositive(taxableIncome)) {
+            return taxableIncome;
+        } else {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    private boolean calculatedTaxableIncomeIsPositive(BigDecimal taxableIncome) {
+        return taxableIncome.compareTo(BigDecimal.ZERO) > 0;
     }
 
     BigDecimal totalSalaryCalculation() {
