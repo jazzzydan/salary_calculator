@@ -15,16 +15,16 @@ public class NetSalary extends Salary {
     public BigDecimal calculateGrossSalary(BigDecimal netSalary) {
         BigDecimal taxFreeIncome = calculateTaxFreeIncome(netSalary);
         BigDecimal incomeTax = (netSalary.subtract(taxFreeIncome))
-                .divide(BigDecimal.valueOf(4), 9, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(4), 4, RoundingMode.HALF_UP);
         BigDecimal taxableIncome = incomeTax.multiply(BigDecimal.valueOf(5));
         BigDecimal amountBeforeIncomeTax = taxableIncome.add(taxFreeIncome);
         return amountBeforeIncomeTax.multiply(GROSS_SALARY_CONVERSION_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal calculateTaxFreeIncome(BigDecimal netSalary) {
-        if (netSalary.compareTo(NET_LOWER_LIMIT) <= 0) {
+        if (netIsLessThanLowerLimit(netSalary)) {
             return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
-        } else if (netSalary.compareTo(NET_UPPER_LIMIT) <= 0) {
+        } else if (netIsLessThanUpperLimit(netSalary)) {
             BigDecimal upperMinusNetSalary = NET_UPPER_LIMIT.subtract(netSalary);
             BigDecimal upperMinusNetSalaryMultiplyBaseTax = BASE_TAX_FREE_INCOME.multiply(upperMinusNetSalary);
             BigDecimal upperNetLimitMinusLower = NET_UPPER_LIMIT.subtract(NET_LOWER_LIMIT);
@@ -33,5 +33,13 @@ public class NetSalary extends Salary {
                     .setScale(2, RoundingMode.HALF_UP);
         }
         return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private boolean netIsLessThanUpperLimit(BigDecimal netSalary) {
+        return netSalary.compareTo(NET_UPPER_LIMIT) <= 0;
+    }
+
+    private boolean netIsLessThanLowerLimit(BigDecimal netSalary) {
+        return netSalary.compareTo(NET_LOWER_LIMIT) <= 0;
     }
 }

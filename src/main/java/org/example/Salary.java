@@ -116,9 +116,9 @@ public abstract class Salary {
 
     BigDecimal calculateTaxFreeIncome() {
         if (useTaxFreeIncome) {
-            if (grossSalary.compareTo(GROSS_LOWER_LIMIT) <= 0) {
+            if (grossIsLessThanLowerLimit()) {
                 return BASE_TAX_FREE_INCOME.setScale(2, RoundingMode.HALF_UP);
-            } else if (grossSalary.compareTo(GROSS_UPPER_LIMIT) <= 0) {
+            } else if (grossIsLessThanUpperLimit()) {
                 BigDecimal taxableAmount = grossSalary.subtract(GROSS_LOWER_LIMIT);
                 BigDecimal taxFreeIncome = BASE_TAX_FREE_INCOME.subtract(TAX_FREE_INCOME_CONVERSION_RATE.multiply(taxableAmount));
                 return taxFreeIncome.setScale(2, RoundingMode.HALF_UP);
@@ -126,6 +126,14 @@ public abstract class Salary {
             return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         }
         return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private boolean grossIsLessThanUpperLimit() {
+        return grossSalary.compareTo(GROSS_UPPER_LIMIT) <= 0;
+    }
+
+    private boolean grossIsLessThanLowerLimit() {
+        return grossSalary.compareTo(GROSS_LOWER_LIMIT) <= 0;
     }
 
     @Override
